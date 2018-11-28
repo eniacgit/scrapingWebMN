@@ -165,6 +165,16 @@ public class Scraping {
 			return strNombre;
 		}
 		
+		private static String eliminarComa_o_puntoString(String cadena) {
+			String aux="";
+			for (int i=0; i< cadena.length();i++) {
+				char car = cadena.charAt(i);
+				if ((car != ','))
+					aux = aux + car;
+			}				
+			return aux;
+		}
+		
 		
 		public VOProductoMN obtenerProducto(String nombre) {
 			VOProductoMN producto = new VOProductoMN();			
@@ -190,7 +200,11 @@ public class Scraping {
 				for (Element precio: precios) {
 					// elimino simbolo de $ y convierto a double
 					//System.out.println((precio.text()).substring(1));
-					double _precio = Double.parseDouble((precio.text()).substring(1).replace(',', '.'));
+					//double _precio = Double.parseDouble((precio.text()).substring(1).replace(',', '.'));		
+					
+					System.out.println("PRECIO: " + eliminarComa_o_puntoString((precio.text()).substring(1)));
+					
+					double _precio = Double.parseDouble(eliminarComa_o_puntoString((precio.text()).substring(1)));
 					producto.setPrecio(_precio);
 				}
 				
